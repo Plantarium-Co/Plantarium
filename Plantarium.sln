@@ -3,9 +3,37 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1000
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{35B2BD89-D7DB-4675-BCA7-7FDD02EDD2ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{3C0DAC0A-0A10-4230-8277-F41348B4F223}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{02858E99-E1F7-41A9-8AC4-CFF3C776471F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Data", "src\Infrastructure\Plantarium.Data\Plantarium.Data.csproj", "{3C771F2D-3883-4FCD-9926-F4840FDEAA20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plantarium.Application", "src\Application\Plantarium.Application\Plantarium.Application.csproj", "{3F523A8D-3A80-4E61-9934-3266DA955B64}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C771F2D-3883-4FCD-9926-F4840FDEAA20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C771F2D-3883-4FCD-9926-F4840FDEAA20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C771F2D-3883-4FCD-9926-F4840FDEAA20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C771F2D-3883-4FCD-9926-F4840FDEAA20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F523A8D-3A80-4E61-9934-3266DA955B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F523A8D-3A80-4E61-9934-3266DA955B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F523A8D-3A80-4E61-9934-3266DA955B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F523A8D-3A80-4E61-9934-3266DA955B64}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3C771F2D-3883-4FCD-9926-F4840FDEAA20} = {35B2BD89-D7DB-4675-BCA7-7FDD02EDD2ED}
+		{3F523A8D-3A80-4E61-9934-3266DA955B64} = {3C0DAC0A-0A10-4230-8277-F41348B4F223}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7182C1CA-D87E-45E4-8844-03A656B08746}
