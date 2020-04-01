@@ -3,7 +3,7 @@
 //     Plantarium, All rights reserved
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Plantarium.Data.Contexts
+namespace Plantarium.Infrastructure.Contexts
 {
     using System;
     using Microsoft.AspNetCore.Identity;
