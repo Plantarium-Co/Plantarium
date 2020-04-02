@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AuthException.cs" company="Plantarium Co.">
+// <copyright file="TokenProvider.cs" company="Plantarium Co.">
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
@@ -27,7 +27,7 @@ namespace Plantarium.Infrastructure.Providers
         /// <summary>
         /// The expiry in days.
         /// </summary>
-        private const double EXPIRY_DAYS = 7;
+        private const double EXPIRYDAYS = 7;
 
         /// <summary>
         /// The algorithm.
@@ -50,7 +50,7 @@ namespace Plantarium.Infrastructure.Providers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddDays(EXPIRY_DAYS),
+                Expires = DateTime.UtcNow.AddDays(EXPIRYDAYS),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), ALGORITHM)
             };
 
