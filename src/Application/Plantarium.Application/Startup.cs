@@ -1,11 +1,13 @@
 ﻿// -----------------------------------------------------------------------
 // <copyright file="Startup.cs" company="Plantarium Co.">
-//     Plantarium, All rights reserved
+//     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
 namespace Plantarium.Application
 {
     using System;
+    using System.Text;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -13,6 +15,7 @@ namespace Plantarium.Application
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.IdentityModel.Tokens;
     using Plantarium.Infrastructure.Contexts;
 
     /// <summary>
@@ -45,12 +48,31 @@ namespace Plantarium.Application
         {
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(
-                    this.Configuration.GetConnectionString("Default"), 
+                    this.Configuration.GetConnectionString("Default"),
                     assemblyOptions => assemblyOptions.MigrationsAssembly("Plantarium.Infrastructure")));
 
             services.AddDefaultIdentity<IdentityUser<Guid>>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
+
+            var key = Encoding.ASCII.GetBytes("Plantarium");
+            services.AddAuthentication(authOpts =>
+            {
+                authOpts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                authOpts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(jwtOpts =>
+            {
+                jwtOpts.RequireHttpsMetadata = false;
+                jwtOpts.SaveToken = true;
+                jwtOpts.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

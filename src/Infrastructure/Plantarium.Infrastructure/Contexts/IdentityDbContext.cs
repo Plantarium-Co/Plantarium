@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
 // <copyright file="IdentityDbContext.cs" company="Plantarium Co.">
-//     Plantarium, All rights reserved
+//     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
 namespace Plantarium.Infrastructure.Contexts
@@ -20,7 +20,8 @@ namespace Plantarium.Infrastructure.Contexts
         /// Initializes a new instance of the <see cref="IdentityDbContext"/> class.
         /// </summary>
         /// <param name="options">The options.</param>
-        public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
+        public IdentityDbContext(DbContextOptions<IdentityDbContext> options) 
+            : base(options)
         {
         }
 

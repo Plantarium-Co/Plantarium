@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
 // <copyright file="Program.cs" company="Plantarium Co.">
-//     Plantarium, All rights reserved
+//     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
 namespace Plantarium.Application
