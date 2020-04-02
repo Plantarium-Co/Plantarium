@@ -51,7 +51,7 @@ namespace Plantarium.Application
                     this.Configuration.GetConnectionString("Default"),
                     assemblyOptions => assemblyOptions.MigrationsAssembly("Plantarium.Infrastructure")));
 
-            services.AddDefaultIdentity<IdentityUser<Guid>>()
+            services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
