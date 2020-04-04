@@ -15,4 +15,8 @@
     <ProjectReference Include="..\..\Infrastructure\Plantarium.Infrastructure\Plantarium.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

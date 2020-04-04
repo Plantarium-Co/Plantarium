@@ -10,7 +10,9 @@ namespace Plantarium.Infrastructure.Providers
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Text;
+    using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
+    using Plantarium.Infrastructure.Configurations;
     using Plantarium.Infrastructure.Providers.Interfaces;
 
     /// <summary>
@@ -20,19 +22,18 @@ namespace Plantarium.Infrastructure.Providers
     public class TokenProvider : ITokenProvider
     {
         /// <summary>
-        /// The secret.
+        /// The JWT settings.
         /// </summary>
-        private const string SECRET = "Plantarium";
+        private readonly JwtSettings jwtSettings;
 
         /// <summary>
-        /// The expiry in days.
+        /// Initializes a new instance of the <see cref="TokenProvider"/> class.
         /// </summary>
-        private const double EXPIRYDAYS = 7;
-
-        /// <summary>
-        /// The algorithm.
-        /// </summary>
-        private const string ALGORITHM = SecurityAlgorithms.HmacSha256Signature;
+        /// <param name="optionsMonitor">The options monitor.</param>
+        public TokenProvider(IOptionsMonitor<JwtSettings> optionsMonitor)
+        {
+            this.jwtSettings = optionsMonitor.CurrentValue;
+        }
 
         /// <summary>
         /// Generates the token.
@@ -45,13 +46,13 @@ namespace Plantarium.Infrastructure.Providers
         {
             var result = string.Empty;
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(SECRET);
+            var key = Encoding.ASCII.GetBytes(this.jwtSettings.Secret);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddDays(EXPIRYDAYS),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), ALGORITHM)
+                Expires = DateTime.UtcNow.AddDays(this.jwtSettings.ExpiryInDays),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), this.jwtSettings.Algorithm)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
