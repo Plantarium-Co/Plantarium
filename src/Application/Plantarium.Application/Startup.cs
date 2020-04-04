@@ -16,6 +16,7 @@ namespace Plantarium.Application
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Plantarium.Infrastructure.Configurations;
     using Plantarium.Infrastructure.Contexts;
 
     /// <summary>
@@ -55,7 +56,9 @@ namespace Plantarium.Application
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            var key = Encoding.ASCII.GetBytes("Plantarium");
+            var jwtSection = this.Configuration.GetSection(nameof(JwtSettings));
+            var secret = jwtSection.GetValue<string>(nameof(JwtSettings.Secret));
+
             services.AddAuthentication(authOpts =>
             {
                 authOpts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -68,11 +71,13 @@ namespace Plantarium.Application
                 jwtOpts.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
             });
+
+            services.Configure<JwtSettings>(jwtSection);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
