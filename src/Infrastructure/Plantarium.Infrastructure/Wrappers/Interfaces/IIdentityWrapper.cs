@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IAuthWrapper.cs" company="Plantarium Co.">
+// <copyright file="IIdentityWrapper.cs" company="Plantarium Co.">
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
@@ -8,9 +8,9 @@ namespace Plantarium.Infrastructure.Wrappers.Interfaces
     using System.Threading.Tasks;
 
     /// <summary>
-    /// The authentication wrapper.
+    /// The identity wrapper.
     /// </summary>
-    public interface IAuthWrapper
+    public interface IIdentityWrapper
     {
         /// <summary>
         /// Registers the asynchronous.

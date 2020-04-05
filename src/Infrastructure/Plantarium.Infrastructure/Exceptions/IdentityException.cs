@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AuthException.cs" company="Plantarium Co.">
+// <copyright file="IdentityException.cs" company="Plantarium Co.">
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
@@ -14,23 +14,23 @@ namespace Plantarium.Infrastructure.Exceptions
     /// The authentication exception.
     /// </summary>
     /// <seealso cref="System.Exception" />
-    public class AuthException : Exception
+    public class IdentityException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthException"/> class.
+        /// Initializes a new instance of the <see cref="IdentityException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public AuthException(string message)
+        public IdentityException(string message)
             : base(message)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthException"/> class.
+        /// Initializes a new instance of the <see cref="IdentityException"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="errors">The errors.</param>
-        public AuthException(string message, IEnumerable<IdentityError> errors)
+        public IdentityException(string message, IEnumerable<IdentityError> errors)
             : base(message)
         {
             this.Errors = errors.ToDictionary(a => a.Code, a => a.Description);

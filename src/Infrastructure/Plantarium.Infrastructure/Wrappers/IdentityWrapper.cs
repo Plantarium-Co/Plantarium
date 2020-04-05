@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AuthWrapper.cs" company="Plantarium Co.">
+// <copyright file="IdentityWrapper.cs" company="Plantarium Co.">
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
@@ -17,8 +17,8 @@ namespace Plantarium.Infrastructure.Wrappers
     /// <summary>
     /// The authentication wrapper.
     /// </summary>
-    /// <seealso cref="Plantarium.Infrastructure.Wrappers.Interfaces.IAuthWrapper" />
-    public class AuthWrapper : IAuthWrapper
+    /// <seealso cref="Plantarium.Infrastructure.Wrappers.Interfaces.IIdentityWrapper" />
+    public class IdentityWrapper : IIdentityWrapper
     {
         /// <summary>
         /// The user manager.
@@ -41,7 +41,7 @@ namespace Plantarium.Infrastructure.Wrappers
         private readonly ITokenProvider tokenProvider;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthWrapper"/> class.
+        /// Initializes a new instance of the <see cref="IdentityWrapper"/> class.
         /// </summary>
         /// <param name="userManager">The user manager.</param>
         /// <param name="signInManager">The sign in manager.</param>
@@ -56,7 +56,7 @@ namespace Plantarium.Infrastructure.Wrappers
         /// or
         /// tokenProvider
         /// </exception>
-        public AuthWrapper(
+        public IdentityWrapper(
             UserManager<IdentityUser<Guid>> userManager,
             SignInManager<IdentityUser<Guid>> signInManager,
             RoleManager<IdentityRole<Guid>> roleManager,
@@ -74,7 +74,7 @@ namespace Plantarium.Infrastructure.Wrappers
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns>The task.</returns>
-        /// <exception cref="Plantarium.Infrastructure.Exceptions.AuthException">
+        /// <exception cref="Plantarium.Infrastructure.Exceptions.IdentityException">
         /// Registration failed.
         /// or
         /// Claim Registration failed.
@@ -85,14 +85,14 @@ namespace Plantarium.Infrastructure.Wrappers
 
             if (!createResult.Succeeded)
             {
-                throw new AuthException("Registration failed.", createResult.Errors);
+                throw new IdentityException("Registration failed.", createResult.Errors);
             }
 
             var registerClaimResult = await this.RegisterClaimsAsync(username);
 
             if (!registerClaimResult.Succeeded)
             {
-                throw new AuthException("Claim Registration failed.", registerClaimResult.Errors);
+                throw new IdentityException("Claim Registration failed.", registerClaimResult.Errors);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Plantarium.Infrastructure.Wrappers
         /// <param name="username">Name of the user.</param>
         /// <param name="role">The role.</param>
         /// <returns>The task.</returns>
-        /// <exception cref="Plantarium.Infrastructure.Exceptions.AuthException">
+        /// <exception cref="Plantarium.Infrastructure.Exceptions.IdentityException">
         /// Role creation failed.
         /// or
         /// Role assignment failed.
@@ -116,14 +116,14 @@ namespace Plantarium.Infrastructure.Wrappers
 
             if (!addRoleResult.Succeeded)
             {
-                throw new AuthException("Role assignment failed.", addRoleResult.Errors);
+                throw new IdentityException("Role assignment failed.", addRoleResult.Errors);
             }
 
             var addRoleClaimResult = await this.userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role));
 
             if (!addRoleClaimResult.Succeeded)
             {
-                throw new AuthException("Role claim assignment failed.", addRoleClaimResult.Errors);
+                throw new IdentityException("Role claim assignment failed.", addRoleClaimResult.Errors);
             }
         }
 
@@ -133,7 +133,7 @@ namespace Plantarium.Infrastructure.Wrappers
         /// <param name="username">The username.</param>
         /// <param name="role">The role.</param>
         /// <returns>The task.</returns>
-        /// <exception cref="Plantarium.Infrastructure.Exceptions.AuthException">
+        /// <exception cref="Plantarium.Infrastructure.Exceptions.IdentityException">
         /// Role removal failed.
         /// or
         /// Role claim removal failed.
@@ -145,14 +145,14 @@ namespace Plantarium.Infrastructure.Wrappers
 
             if (!removeRoleResult.Succeeded)
             {
-                throw new AuthException("Role removal failed.", removeRoleResult.Errors);
+                throw new IdentityException("Role removal failed.", removeRoleResult.Errors);
             }
 
             var removeRoleClaimResult = await this.userManager.RemoveClaimAsync(user, new Claim(ClaimTypes.Role, role));
 
             if (!removeRoleClaimResult.Succeeded)
             {
-                throw new AuthException("Role claim removal failed.", removeRoleClaimResult.Errors);
+                throw new IdentityException("Role claim removal failed.", removeRoleClaimResult.Errors);
             }
         }
 
@@ -162,14 +162,14 @@ namespace Plantarium.Infrastructure.Wrappers
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns>The token generated.</returns>
-        /// <exception cref="Plantarium.Infrastructure.Exceptions.AuthException">Sign in failed.</exception>
+        /// <exception cref="Plantarium.Infrastructure.Exceptions.IdentityException">Sign in failed.</exception>
         public async Task<string> AuthenticateAsync(string username, string password)
         {
             var signInResult = await this.signInManager.PasswordSignInAsync(username, password, false, false);
 
             if (!signInResult.Succeeded)
             {
-                throw new AuthException("Sign in failed.");
+                throw new IdentityException("Sign in failed.");
             }
 
             var user = await this.userManager.FindByNameAsync(username);
