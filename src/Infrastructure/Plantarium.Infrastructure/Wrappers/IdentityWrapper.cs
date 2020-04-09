@@ -10,6 +10,7 @@ namespace Plantarium.Infrastructure.Wrappers
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using Plantarium.Data.Constants;
     using Plantarium.Infrastructure.Exceptions;
     using Plantarium.Infrastructure.Providers.Interfaces;
     using Plantarium.Infrastructure.Wrappers.Interfaces;
@@ -109,17 +110,17 @@ namespace Plantarium.Infrastructure.Wrappers
         /// or
         /// Role claim assignment failed.
         /// </exception>
-        public async Task AddToRoleAsync(string username, string role)
+        public async Task AddToRoleAsync(string username, Role role)
         {
             var user = await this.userManager.FindByNameAsync(username);
-            var addRoleResult = await this.userManager.AddToRoleAsync(user, role);
+            var addRoleResult = await this.userManager.AddToRoleAsync(user, role.ToString());
 
             if (!addRoleResult.Succeeded)
             {
                 throw new IdentityException("Role assignment failed.", addRoleResult.Errors);
             }
 
-            var addRoleClaimResult = await this.userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role));
+            var addRoleClaimResult = await this.userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role.ToString()));
 
             if (!addRoleClaimResult.Succeeded)
             {
@@ -138,17 +139,17 @@ namespace Plantarium.Infrastructure.Wrappers
         /// or
         /// Role claim removal failed.
         /// </exception>
-        public async Task RemoveFromRoleAsync(string username, string role)
+        public async Task RemoveFromRoleAsync(string username, Role role)
         {
             var user = await this.userManager.FindByNameAsync(username);
-            var removeRoleResult = await this.userManager.RemoveFromRoleAsync(user, role);
+            var removeRoleResult = await this.userManager.RemoveFromRoleAsync(user, role.ToString());
 
             if (!removeRoleResult.Succeeded)
             {
                 throw new IdentityException("Role removal failed.", removeRoleResult.Errors);
             }
 
-            var removeRoleClaimResult = await this.userManager.RemoveClaimAsync(user, new Claim(ClaimTypes.Role, role));
+            var removeRoleClaimResult = await this.userManager.RemoveClaimAsync(user, new Claim(ClaimTypes.Role, role.ToString()));
 
             if (!removeRoleClaimResult.Succeeded)
             {
