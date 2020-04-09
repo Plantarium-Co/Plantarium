@@ -1,16 +1,17 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IAuthWrapper.cs" company="Plantarium Co.">
+// <copyright file="IIdentityWrapper.cs" company="Plantarium Co.">
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
 namespace Plantarium.Infrastructure.Wrappers.Interfaces
 {
     using System.Threading.Tasks;
+    using Plantarium.Data.Constants;
 
     /// <summary>
-    /// The authentication wrapper.
+    /// The identity wrapper.
     /// </summary>
-    public interface IAuthWrapper
+    public interface IIdentityWrapper
     {
         /// <summary>
         /// Registers the asynchronous.
@@ -26,7 +27,7 @@ namespace Plantarium.Infrastructure.Wrappers.Interfaces
         /// <param name="username">The username.</param>
         /// <param name="role">The role.</param>
         /// <returns>The task.</returns>
-        Task AddToRoleAsync(string username, string role);
+        Task AddToRoleAsync(string username, Role role);
 
         /// <summary>
         /// Removes from role asynchronous.
@@ -34,7 +35,7 @@ namespace Plantarium.Infrastructure.Wrappers.Interfaces
         /// <param name="username">The username.</param>
         /// <param name="role">The role.</param>
         /// <returns>The task.</returns>
-        Task RemoveFromRoleAsync(string username, string role);
+        Task RemoveFromRoleAsync(string username, Role role);
 
         /// <summary>
         /// Authenticates the asynchronous.
