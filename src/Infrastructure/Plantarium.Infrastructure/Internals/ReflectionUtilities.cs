@@ -33,7 +33,7 @@ namespace Plantarium.Infrastructure.Internals
         public static Dictionary<string, Func<T, object>> CachePropertyGetters<T>()
         {
             var propertyGettersCache = new Dictionary<string, Func<T, object>>();
-            var properties = typeof(T).GetProperties();
+            var properties = typeof(T).GetProperties(DefaultFlags);
 
             foreach (var property in properties)
             {
@@ -57,7 +57,7 @@ namespace Plantarium.Infrastructure.Internals
         public static Dictionary<string, Func<object, object>> CachePropertyGetters(object model)
         {
             var propertyGettersCache = new Dictionary<string, Func<object, object>>();
-            var properties = model.GetType().GetProperties();
+            var properties = model.GetType().GetProperties(DefaultFlags);
 
             foreach (var property in properties)
             {
@@ -107,7 +107,7 @@ namespace Plantarium.Infrastructure.Internals
         public static Dictionary<string, Action<T, object>> CachePropertySetters<T>()
         {
             var propertySettersCache = new Dictionary<string, Action<T, object>>();
-            var properties = typeof(T).GetProperties();
+            var properties = typeof(T).GetProperties(DefaultFlags);
 
             foreach (var property in properties)
             {
@@ -131,7 +131,7 @@ namespace Plantarium.Infrastructure.Internals
         public static Dictionary<string, Action<object, object>> CachePropertySetters(object model)
         {
             var propertySettersCache = new Dictionary<string, Action<object, object>>();
-            var properties = model.GetType().GetProperties();
+            var properties = model.GetType().GetProperties(DefaultFlags);
 
             foreach (var property in properties)
             {
