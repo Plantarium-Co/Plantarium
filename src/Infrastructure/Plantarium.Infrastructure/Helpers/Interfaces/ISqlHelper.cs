@@ -3,7 +3,7 @@
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Plantarium.Infrastructure.Helpers
+namespace Plantarium.Infrastructure.Helpers.Interfaces
 {
     using System.Collections.Generic;
     using System.Data.Common;

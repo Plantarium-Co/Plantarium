@@ -8,7 +8,7 @@ namespace Plantarium.Infrastructure.Extensions
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using Plantarium.Infrastructure.Internals;
+    using static Plantarium.Infrastructure.Internals.ReflectionUtilities;
 
     /// <summary>
     /// The data reader extensions.
@@ -24,7 +24,7 @@ namespace Plantarium.Infrastructure.Extensions
         public static IEnumerable<T> Map<T>(this IDataReader reader) where T : class, new()
         {
             var results = new List<T>(reader.FieldCount);
-            var properties = ReflectionOptimizer.CachePropertySetters<T>(reader.GetFieldNames());
+            var properties = CachePropertySetters<T>(reader.GetFieldNames());
 
             while (reader.Read())
             {

@@ -11,11 +11,12 @@ namespace Plantarium.Infrastructure.Helpers
     using System.Threading.Tasks;
     using System.Transactions;
     using Plantarium.Infrastructure.Extensions;
+    using Plantarium.Infrastructure.Helpers.Interfaces;
 
     /// <summary>
     /// The SQL helper.
     /// </summary>
-    /// <seealso cref="Plantarium.Infrastructure.Helpers.ISqlHelper" />
+    /// <seealso cref="Plantarium.Infrastructure.Helpers.Interfaces.ISqlHelper" />
     public class SqlHelper : ISqlHelper
     {
         /// <summary>
