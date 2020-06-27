@@ -13,7 +13,7 @@ namespace Plantarium.Infrastructure.Builders
     using static Plantarium.Infrastructure.Internals.ReflectionUtilities;
 
     /// <summary>
-    /// The sql command builder.
+    /// The SQL command builder.
     /// </summary>
     /// <seealso cref="Plantarium.Infrastructure.Builders.DbCommandBuilder" />
     public class SqlCommandBuilder : DbCommandBuilder
@@ -26,16 +26,17 @@ namespace Plantarium.Infrastructure.Builders
         }
 
         /// <summary>
-        /// Specifies that the command is a stored procedure.
+        /// Adds a parameter.
         /// </summary>
-        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
         /// <returns>
         /// The db command builder.
         /// </returns>
-        public override DbCommandBuilder IsStoredProcedure(string storedProcedureName)
+        public override DbCommandBuilder WithParameter(string name, object value)
         {
-            this.DbCommand.CommandText = storedProcedureName;
-            this.DbCommand.CommandType = CommandType.StoredProcedure;
+            var parameter = new SqlParameter(this.FormatParameterName(name), value);
+            this.DbCommand.Parameters.Add(parameter);
 
             return this;
         }
@@ -77,18 +78,19 @@ namespace Plantarium.Infrastructure.Builders
         }
 
         /// <summary>
-        /// Adds a data table parameter based on a model type..
+        /// Adds a data table parameter based on a model type.
         /// </summary>
         /// <typeparam name="T">The model type.</typeparam>
+        /// <param name="name">The name.</param>
         /// <param name="models">The models.</param>
         /// <returns>
         /// The db command builder.
         /// </returns>
-        public override DbCommandBuilder WithDataTableParameter<T>(IEnumerable<T> models)
+        public override DbCommandBuilder WithDataTableParameter<T>(string name, IEnumerable<T> models)
         {
             var properties = CachePropertyGetters<T>();
             var dataTable = this.CreateDataTable(models, properties);
-            var parameter = new SqlParameter(this.FormatParameterName(nameof(models)), dataTable) { SqlDbType = SqlDbType.Structured };
+            var parameter = new SqlParameter(this.FormatParameterName(name), dataTable) { SqlDbType = SqlDbType.Structured };
             this.DbCommand.Parameters.Add(parameter);
 
             return this;
@@ -98,17 +100,18 @@ namespace Plantarium.Infrastructure.Builders
         /// Adds a data table parameter based on a selected model type.
         /// </summary>
         /// <typeparam name="T">The model type.</typeparam>
+        /// <param name="name">The name.</param>
         /// <param name="models">The models.</param>
         /// <param name="selector">The selector.</param>
         /// <returns>
         /// The db command builder.
         /// </returns>
-        public override DbCommandBuilder WithDataTableParameter<T>(IEnumerable<T> models, Func<T, object> selector)
+        public override DbCommandBuilder WithDataTableParameter<T>(string name, IEnumerable<T> models, Func<T, object> selector)
         {
             var selectedModels = models.Select(model => selector(model));
             var properties = CachePropertyGetters(selectedModels.First());
             var dataTable = this.CreateDataTable(selectedModels, properties);
-            var parameter = new SqlParameter(this.FormatParameterName(nameof(models)), dataTable) { SqlDbType = SqlDbType.Structured };
+            var parameter = new SqlParameter(this.FormatParameterName(name), dataTable) { SqlDbType = SqlDbType.Structured };
             this.DbCommand.Parameters.Add(parameter);
 
             return this;
