@@ -10,6 +10,7 @@ namespace Plantarium.Infrastructure.Builders
     using System.Data;
     using System.Data.SqlClient;
     using System.Linq;
+    using Plantarium.Infrastructure.Builders.Interfaces;
     using static Plantarium.Infrastructure.Internals.ReflectionUtilities;
 
     /// <summary>
@@ -33,7 +34,7 @@ namespace Plantarium.Infrastructure.Builders
         /// <returns>
         /// The db command builder.
         /// </returns>
-        public override DbCommandBuilder WithParameter(string name, object value)
+        public override IDbCommandBuilder WithParameter(string name, object value)
         {
             var parameter = new SqlParameter(this.FormatParameterName(name), value);
             this.DbCommand.Parameters.Add(parameter);
@@ -49,7 +50,7 @@ namespace Plantarium.Infrastructure.Builders
         /// <returns>
         /// The db command builder.
         /// </returns>
-        public override DbCommandBuilder WithParameters<T>(T model)
+        public override IDbCommandBuilder WithParameters<T>(T model)
         {
             var properties = CachePropertyGetters<T>();
             var parameters = properties.Select(property => new SqlParameter(this.FormatParameterName(property.Key), property.Value(model) ?? DBNull.Value));
@@ -67,7 +68,7 @@ namespace Plantarium.Infrastructure.Builders
         /// <returns>
         /// The db command builder.
         /// </returns>
-        public override DbCommandBuilder WithParameters<T>(T model, Func<T, object> selector)
+        public override IDbCommandBuilder WithParameters<T>(T model, Func<T, object> selector)
         {
             var selectedModel = selector(model);
             var properties = CachePropertyGetters(selectedModel);
@@ -86,7 +87,7 @@ namespace Plantarium.Infrastructure.Builders
         /// <returns>
         /// The db command builder.
         /// </returns>
-        public override DbCommandBuilder WithDataTableParameter<T>(string name, IEnumerable<T> models)
+        public override IDbCommandBuilder WithDataTableParameter<T>(string name, IEnumerable<T> models)
         {
             var properties = CachePropertyGetters<T>();
             var dataTable = this.CreateDataTable(models, properties);
@@ -106,7 +107,7 @@ namespace Plantarium.Infrastructure.Builders
         /// <returns>
         /// The db command builder.
         /// </returns>
-        public override DbCommandBuilder WithDataTableParameter<T>(string name, IEnumerable<T> models, Func<T, object> selector)
+        public override IDbCommandBuilder WithDataTableParameter<T>(string name, IEnumerable<T> models, Func<T, object> selector)
         {
             var selectedModels = models.Select(model => selector(model));
             var properties = CachePropertyGetters(selectedModels.First());

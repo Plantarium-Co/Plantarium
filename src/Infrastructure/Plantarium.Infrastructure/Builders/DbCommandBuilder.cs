@@ -11,11 +11,12 @@ namespace Plantarium.Infrastructure.Builders
     using System.Data.Common;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using Plantarium.Infrastructure.Builders.Interfaces;
 
     /// <summary>
     /// The db command builder.
     /// </summary>
-    public abstract class DbCommandBuilder
+    public abstract class DbCommandBuilder : IDbCommandBuilder
     {
         /// <summary>
         /// The database command.
@@ -42,7 +43,7 @@ namespace Plantarium.Infrastructure.Builders
         /// <param name="name">The name.</param>
         /// <param name="value">The value.</param>
         /// <returns>The db command builder.</returns>
-        public abstract DbCommandBuilder WithParameter(string name, object value);
+        public abstract IDbCommandBuilder WithParameter(string name, object value);
 
         /// <summary>
         /// Adds parameters based on a model type.
@@ -50,7 +51,7 @@ namespace Plantarium.Infrastructure.Builders
         /// <typeparam name="T">The model type.</typeparam>
         /// <param name="model">The model.</param>
         /// <returns>The db command builder.</returns>
-        public abstract DbCommandBuilder WithParameters<T>(T model) where T : class;
+        public abstract IDbCommandBuilder WithParameters<T>(T model) where T : class;
 
         /// <summary>
         /// Adds parameters based on a selected model type.
@@ -59,7 +60,7 @@ namespace Plantarium.Infrastructure.Builders
         /// <param name="model">The model.</param>
         /// <param name="selector">The selector.</param>
         /// <returns>The db command builder.</returns>
-        public abstract DbCommandBuilder WithParameters<T>(T model, Func<T, object> selector) where T : class;
+        public abstract IDbCommandBuilder WithParameters<T>(T model, Func<T, object> selector) where T : class;
 
         /// <summary>
         /// Adds a data table parameter based on a model type..
@@ -68,7 +69,7 @@ namespace Plantarium.Infrastructure.Builders
         /// <param name="name">The name.</param>
         /// <param name="models">The models.</param>
         /// <returns>The db command builder.</returns>
-        public abstract DbCommandBuilder WithDataTableParameter<T>(string name, IEnumerable<T> models) where T : class;
+        public abstract IDbCommandBuilder WithDataTableParameter<T>(string name, IEnumerable<T> models) where T : class;
 
         /// <summary>
         /// Adds a data table parameter based on a selected model type.
@@ -78,14 +79,14 @@ namespace Plantarium.Infrastructure.Builders
         /// <param name="models">The models.</param>
         /// <param name="selector">The selector.</param>
         /// <returns>The db command builder.</returns>
-        public abstract DbCommandBuilder WithDataTableParameter<T>(string name, IEnumerable<T> models, Func<T, object> selector) where T : class;
+        public abstract IDbCommandBuilder WithDataTableParameter<T>(string name, IEnumerable<T> models, Func<T, object> selector) where T : class;
 
         /// <summary>
         /// Specifies that the command is a stored procedure.
         /// </summary>
         /// <param name="storedProcedureName">Name of the stored procedure.</param>
         /// <returns>The db command builder.</returns>
-        public virtual DbCommandBuilder IsStoredProcedure(string storedProcedureName)
+        public virtual IDbCommandBuilder IsStoredProcedure(string storedProcedureName)
         {
             this.DbCommand.CommandText = storedProcedureName;
             this.DbCommand.CommandType = CommandType.StoredProcedure;
@@ -98,7 +99,7 @@ namespace Plantarium.Infrastructure.Builders
         /// </summary>
         /// <param name="timeoutSeconds">The timeout seconds.</param>
         /// <returns>The db command builder.</returns>
-        public virtual DbCommandBuilder WithTimeout(int timeoutSeconds)
+        public virtual IDbCommandBuilder WithTimeout(int timeoutSeconds)
         {
             this.DbCommand.CommandTimeout = timeoutSeconds;
             return this;
