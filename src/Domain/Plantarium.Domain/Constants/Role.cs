@@ -3,7 +3,7 @@
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Plantarium.Data.Constants
+namespace Plantarium.Domain.Constants
 {
     /// <summary>
     /// The application roles.

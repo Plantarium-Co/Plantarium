@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Plantarium.Data\Plantarium.Data.csproj" />
+    <ProjectReference Include="..\..\Domain\Plantarium.Domain\Plantarium.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

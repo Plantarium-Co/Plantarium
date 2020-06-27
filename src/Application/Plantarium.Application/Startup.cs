@@ -49,7 +49,7 @@ namespace Plantarium.Application
         {
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(
-                    this.Configuration.GetConnectionString("Default"),
+                    this.Configuration.GetConnectionString("Database"),
                     assemblyOptions => assemblyOptions.MigrationsAssembly("Plantarium.Infrastructure")));
 
             services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()

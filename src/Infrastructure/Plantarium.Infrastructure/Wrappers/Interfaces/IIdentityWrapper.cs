@@ -6,7 +6,7 @@
 namespace Plantarium.Infrastructure.Wrappers.Interfaces
 {
     using System.Threading.Tasks;
-    using Plantarium.Data.Constants;
+    using Plantarium.Domain.Constants;
 
     /// <summary>
     /// The identity wrapper.
