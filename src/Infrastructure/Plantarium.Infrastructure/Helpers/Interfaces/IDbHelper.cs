@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ISqlHelper.cs" company="Plantarium Co.">
+// <copyright file="IDbHelper.cs" company="Plantarium Co.">
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
@@ -10,9 +10,9 @@ namespace Plantarium.Infrastructure.Helpers.Interfaces
     using System.Threading.Tasks;
 
     /// <summary>
-    /// The SQL helper.
+    /// The db helper.
     /// </summary>
-    public interface ISqlHelper
+    public interface IDbHelper
     {
         /// <summary>
         /// Executes the command asynchronous.

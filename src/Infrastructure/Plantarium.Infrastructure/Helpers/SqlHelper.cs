@@ -7,30 +7,36 @@ namespace Plantarium.Infrastructure.Helpers
 {
     using System.Collections.Generic;
     using System.Data.Common;
-    using System.Data.SqlClient;
     using System.Threading.Tasks;
-    using System.Transactions;
     using Plantarium.Infrastructure.Extensions;
+    using Plantarium.Infrastructure.Factories.Interfaces;
     using Plantarium.Infrastructure.Helpers.Interfaces;
 
     /// <summary>
     /// The SQL helper.
     /// </summary>
-    /// <seealso cref="Plantarium.Infrastructure.Helpers.Interfaces.ISqlHelper" />
-    public class SqlHelper : ISqlHelper
+    /// <seealso cref="Plantarium.Infrastructure.Helpers.Interfaces.IDbHelper" />
+    public class SqlHelper : IDbHelper
     {
         /// <summary>
-        /// The connection string
+        /// The database connection factory
         /// </summary>
-        private readonly string connectionString;
+        private readonly IDbConnectionFactory dbConnectionFactory;
+
+        /// <summary>
+        /// The transaction scope factory
+        /// </summary>
+        private readonly ITransactionScopeFactory transactionScopeFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlHelper"/> class.
         /// </summary>
-        /// <param name="connectionString">The connection string.</param>
-        public SqlHelper(string connectionString)
+        /// <param name="dbConnectionFactory">The database connection factory.</param>
+        /// <param name="transactionScopeFactory">The transaction scope factory.</param>
+        public SqlHelper(IDbConnectionFactory dbConnectionFactory, ITransactionScopeFactory transactionScopeFactory)
         {
-            this.connectionString = connectionString;
+            this.dbConnectionFactory = dbConnectionFactory;
+            this.transactionScopeFactory = transactionScopeFactory;
         }
 
         /// <summary>
@@ -40,10 +46,8 @@ namespace Plantarium.Infrastructure.Helpers
         /// <returns>The task.</returns>
         public async Task ExecuteAsync(DbCommand command)
         {
-            var transactionOptions = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
-
-            using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew, transactionOptions))
-            using (var connection = new SqlConnection(this.connectionString))
+            using (var transactionScope = this.transactionScopeFactory.CreateSerializableScope())
+            using (var connection = this.dbConnectionFactory.CreateSqlConnection())
             {
                 try
                 {
@@ -70,10 +74,9 @@ namespace Plantarium.Infrastructure.Helpers
         public async Task<IEnumerable<T>> QueryAsync<T>(DbCommand command) where T : class, new()
         {
             var result = default(IEnumerable<T>);
-            var transactionOptions = new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted };
 
-            using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew, transactionOptions))
-            using (var connection = new SqlConnection(this.connectionString))
+            using (var transactionScope = this.transactionScopeFactory.CreateReadUncommittedScope())
+            using (var connection = this.dbConnectionFactory.CreateSqlConnection())
             {
                 try
                 {
@@ -110,10 +113,9 @@ namespace Plantarium.Infrastructure.Helpers
         public async Task<T> QueryFirstAsync<T>(DbCommand command)
         {
             var result = default(T);
-            var transactionOptions = new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted };
 
-            using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew, transactionOptions))
-            using (var connection = new SqlConnection(this.connectionString))
+            using (var transactionScope = this.transactionScopeFactory.CreateReadUncommittedScope())
+            using (var connection = this.dbConnectionFactory.CreateSqlConnection())
             {
                 try
                 {
