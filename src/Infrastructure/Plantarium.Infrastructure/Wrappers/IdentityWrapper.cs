@@ -10,7 +10,7 @@ namespace Plantarium.Infrastructure.Wrappers
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
-    using Plantarium.Data.Constants;
+    using Plantarium.Domain.Constants;
     using Plantarium.Infrastructure.Exceptions;
     using Plantarium.Infrastructure.Providers.Interfaces;
     using Plantarium.Infrastructure.Wrappers.Interfaces;

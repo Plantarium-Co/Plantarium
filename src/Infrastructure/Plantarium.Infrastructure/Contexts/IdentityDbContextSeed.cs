@@ -10,7 +10,7 @@ namespace Plantarium.Infrastructure.Contexts
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using Plantarium.Data.Constants;
+    using Plantarium.Domain.Constants;
 
     /// <summary>
     /// The identity database context seed.
