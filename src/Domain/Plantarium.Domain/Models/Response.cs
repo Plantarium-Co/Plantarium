@@ -3,26 +3,24 @@
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Plantarium.Service.Identity.Models
+
+namespace Plantarium.Domain.Models
 {
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The base service response.
+    /// The base response.
     /// </summary>
     public class Response
     {
         /// <summary>
-        /// Gets a value indicating whether this <see cref="Response"/> is succeded.
+        /// Gets a value indicating whether this <see cref="Response"/> is succeed.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if succeded; otherwise, <c>false</c>.
+        ///   <c>true</c> if success; otherwise, <c>false</c>.
         /// </value>
-        public bool Succeded
-        {
-            get => this.Errors.Any() ? false : true;
-        }
+        public bool Success => this.Errors.Any();
 
         /// <summary>
         /// Gets or sets the errors.

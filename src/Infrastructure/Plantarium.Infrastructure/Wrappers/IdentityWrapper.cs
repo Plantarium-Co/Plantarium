@@ -63,10 +63,10 @@ namespace Plantarium.Infrastructure.Wrappers
             RoleManager<IdentityRole<Guid>> roleManager,
             ITokenProvider tokenProvider)
         {
-            this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-            this.signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
-            this.roleManager = roleManager ?? throw new ArgumentNullException(nameof(roleManager));
-            this.tokenProvider = tokenProvider ?? throw new ArgumentNullException(nameof(tokenProvider));
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.roleManager = roleManager;
+            this.tokenProvider = tokenProvider;
         }
 
         /// <summary>
@@ -74,13 +74,13 @@ namespace Plantarium.Infrastructure.Wrappers
         /// </summary>
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
-        /// <returns>The task.</returns>
+        /// <returns>The identity user id.</returns>
         /// <exception cref="Plantarium.Infrastructure.Exceptions.IdentityException">
         /// Registration failed.
         /// or
         /// Claim Registration failed.
         /// </exception>
-        public async Task RegisterAsync(string username, string password)
+        public async Task<Guid> RegisterAsync(string username, string password)
         {
             var createResult = await this.userManager.CreateAsync(new IdentityUser<Guid>(username), password);
 
@@ -95,6 +95,10 @@ namespace Plantarium.Infrastructure.Wrappers
             {
                 throw new IdentityException("Claim Registration failed.", registerClaimResult.Errors);
             }
+
+            var user = await this.userManager.FindByNameAsync(username);
+
+            return user.Id;
         }
 
         /// <summary>

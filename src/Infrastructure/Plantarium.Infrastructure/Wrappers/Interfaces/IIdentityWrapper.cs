@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Infrastructure.Wrappers.Interfaces
 {
+    using System;
     using System.Threading.Tasks;
     using Plantarium.Domain.Constants;
 
@@ -18,8 +19,8 @@ namespace Plantarium.Infrastructure.Wrappers.Interfaces
         /// </summary>
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
-        /// <returns>The task.</returns>
-        Task RegisterAsync(string username, string password);
+        /// <returns>The identity user id.</returns>
+        Task<Guid> RegisterAsync(string username, string password);
 
         /// <summary>
         /// Adds to role asynchronous.

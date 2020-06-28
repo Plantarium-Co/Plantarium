@@ -33,7 +33,7 @@ namespace Plantarium.Infrastructure.Exceptions
         public IdentityException(string message, IEnumerable<IdentityError> errors)
             : base(message)
         {
-            this.Errors = errors.ToDictionary(a => a.Code, a => a.Description);
+            this.Errors = errors.Select(error => error.Description);
         }
 
         /// <summary>
@@ -42,6 +42,6 @@ namespace Plantarium.Infrastructure.Exceptions
         /// <value>
         /// The errors.
         /// </value>
-        public IDictionary<string, string> Errors { get; private set; }
+        public IEnumerable<string> Errors { get; private set; }
     }
 }
