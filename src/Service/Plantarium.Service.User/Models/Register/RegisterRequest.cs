@@ -6,12 +6,12 @@
 namespace Plantarium.Service.User.Models.Register
 {
     using Plantarium.Domain.Constants;
-    using Plantarium.Domain.Models;
+    using Plantarium.Service.Common.Models;
 
     /// <summary>
     /// The register request.
     /// </summary>
-    /// <seealso cref="Plantarium.Domain.Models.Request" />
+    /// <seealso cref="Plantarium.Service.Common.Models.Request" />
     public class RegisterRequest : Request
     {
         /// <summary>

@@ -5,12 +5,12 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Service.User.Models.Register
 {
-    using Plantarium.Domain.Models;
+    using Plantarium.Service.Common.Models;
 
     /// <summary>
     /// The register response.
     /// </summary>
-    /// <seealso cref="Plantarium.Domain.Models.Response" />
+    /// <seealso cref="Plantarium.Service.Common.Models.Response" />
     public class RegisterResponse : Response
     {
     }
