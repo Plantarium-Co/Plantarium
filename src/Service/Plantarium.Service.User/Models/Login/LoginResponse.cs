@@ -3,12 +3,14 @@
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Plantarium.Service.Identity.Models.Login
+namespace Plantarium.Service.User.Models.Login
 {
+    using Plantarium.Domain.Models;
+
     /// <summary>
     /// The login response.
     /// </summary>
-    /// <seealso cref="Plantarium.Service.Identity.Models.Response" />
+    /// <seealso cref="Plantarium.Domain.Models.Response" />
     public class LoginResponse : Response
     {
         /// <summary>

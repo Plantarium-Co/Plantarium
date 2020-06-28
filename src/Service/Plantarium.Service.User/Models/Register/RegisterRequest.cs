@@ -3,14 +3,15 @@
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Plantarium.Service.Identity.Models.Register
+namespace Plantarium.Service.User.Models.Register
 {
-    using Plantarium.Data.Constants;
+    using Plantarium.Domain.Constants;
+    using Plantarium.Domain.Models;
 
     /// <summary>
     /// The register request.
     /// </summary>
-    /// <seealso cref="Plantarium.Service.Identity.Models.Request" />
+    /// <seealso cref="Plantarium.Domain.Models.Request" />
     public class RegisterRequest : Request
     {
         /// <summary>
@@ -36,5 +37,21 @@ namespace Plantarium.Service.Identity.Models.Register
         /// The role.
         /// </value>
         public Role Role { get; set; } = Role.User;
+
+        /// <summary>
+        /// Gets or sets the name of the given.
+        /// </summary>
+        /// <value>
+        /// The name of the given.
+        /// </value>
+        public string GivenName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last name.
+        /// </summary>
+        /// <value>
+        /// The last name.
+        /// </value>
+        public string LastName { get; set; }
     }
 }

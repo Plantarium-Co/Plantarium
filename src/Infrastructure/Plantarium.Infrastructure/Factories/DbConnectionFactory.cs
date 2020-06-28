@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Infrastructure.Factories
 {
+    using System;
     using System.Data.SqlClient;
     using Plantarium.Infrastructure.Factories.Interfaces;
 
@@ -25,6 +26,11 @@ namespace Plantarium.Infrastructure.Factories
         /// <param name="connectionString">The connection string.</param>
         public DbConnectionFactory(string connectionString)
         {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
+
             this.connectionString = connectionString;
         }
 

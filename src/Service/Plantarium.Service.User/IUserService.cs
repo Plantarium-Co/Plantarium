@@ -1,31 +1,31 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IIdentityService.cs" company="Plantarium Co.">
+// <copyright file="IUserService.cs" company="Plantarium Co.">
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Plantarium.Service.Identity
+namespace Plantarium.Service.User
 {
     using System.Threading.Tasks;
-    using Plantarium.Service.Identity.Models.Login;
-    using Plantarium.Service.Identity.Models.Register;
+    using Plantarium.Service.User.Models.Login;
+    using Plantarium.Service.User.Models.Register;
 
     /// <summary>
-    /// The identity service.
+    /// The user service.
     /// </summary>
-    public interface IIdentityService
+    public interface IUserService
     {
         /// <summary>
         /// Logins the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
+        /// <returns>The login response.</returns>
         Task<LoginResponse> Login(LoginRequest request);
 
         /// <summary>
         /// Registers the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
+        /// <returns>The register response.</returns>
         Task<RegisterResponse> Register(RegisterRequest request);
     }
 }
