@@ -9,7 +9,7 @@ namespace Plantarium.Service.User
     using System.Threading.Tasks;
     using Plantarium.Infrastructure.Exceptions;
     using Plantarium.Infrastructure.Wrappers.Interfaces;
-    using Plantarium.Service.User.Exceptions;
+    using Plantarium.Service.Common.Exceptions;
     using Plantarium.Service.User.Extensions;
     using Plantarium.Service.User.Models.Login;
     using Plantarium.Service.User.Models.Register;
@@ -61,13 +61,13 @@ namespace Plantarium.Service.User
             {
                 result.Errors.AddRange(ex.Errors);
             }
-            catch (UserServiceDataException ex)
+            catch (ServiceDataException ex)
             {
                 result.Errors.Add(ex.Message);
             }
             catch (Exception ex)
             {
-                throw new UserServiceException(ex.Message, ex);
+                throw new ServiceException(ex.Message, ex);
             }
 
             return result;
@@ -92,7 +92,7 @@ namespace Plantarium.Service.User
             }
             catch (Exception ex)
             {
-                throw new UserServiceException(ex.Message, ex);
+                throw new ServiceException(ex.Message, ex);
             }
 
             return result;

@@ -3,7 +3,7 @@
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Plantarium.Domain.Models
+namespace Plantarium.Service.Common.Models
 {
     /// <summary>
     /// The base service request.

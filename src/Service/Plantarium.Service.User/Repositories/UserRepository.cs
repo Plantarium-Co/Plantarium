@@ -10,7 +10,7 @@ namespace Plantarium.Service.User.Repositories
     using Plantarium.Domain.Entities.User;
     using Plantarium.Infrastructure.Factories.Interfaces;
     using Plantarium.Infrastructure.Helpers.Interfaces;
-    using Plantarium.Service.User.Exceptions;
+    using Plantarium.Service.Common.Exceptions;
     using Plantarium.Service.User.Repositories.Interfaces;
 
     /// <summary>
@@ -70,7 +70,7 @@ namespace Plantarium.Service.User.Repositories
             }
             catch (Exception ex)
             {
-                throw new UserServiceDataException(ex.Message);
+                throw new ServiceDataException(ex.Message);
             }
         }
     }

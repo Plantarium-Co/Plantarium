@@ -5,12 +5,12 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Service.User.Models.Login
 {
-    using Plantarium.Domain.Models;
+    using Plantarium.Service.Common.Models;
 
     /// <summary>
     /// The login response.
     /// </summary>
-    /// <seealso cref="Plantarium.Domain.Models.Response" />
+    /// <seealso cref="Plantarium.Service.Common.Models.Response" />
     public class LoginResponse : Response
     {
         /// <summary>

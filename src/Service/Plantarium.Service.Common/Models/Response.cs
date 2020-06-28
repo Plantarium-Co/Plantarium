@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Plantarium.Domain.Models
+namespace Plantarium.Service.Common.Models
 {
     using System.Collections.Generic;
     using System.Linq;

@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{962D0E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Domain", "src\Domain\Plantarium.Domain\Plantarium.Domain.csproj", "{CE29B561-2104-4F48-9B7F-7686E7283983}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plantarium.Service.Common", "src\Service\Plantarium.Service.Common\Plantarium.Service.Common.csproj", "{7C28D13F-A0CC-4EC9-8257-847FBF91EC86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{CE29B561-2104-4F48-9B7F-7686E7283983}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE29B561-2104-4F48-9B7F-7686E7283983}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE29B561-2104-4F48-9B7F-7686E7283983}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C28D13F-A0CC-4EC9-8257-847FBF91EC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C28D13F-A0CC-4EC9-8257-847FBF91EC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C28D13F-A0CC-4EC9-8257-847FBF91EC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C28D13F-A0CC-4EC9-8257-847FBF91EC86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{3F523A8D-3A80-4E61-9934-3266DA955B64} = {3C0DAC0A-0A10-4230-8277-F41348B4F223}
 		{EC4F70CB-D61B-4BA7-8D03-05CDF52469DF} = {02858E99-E1F7-41A9-8AC4-CFF3C776471F}
 		{CE29B561-2104-4F48-9B7F-7686E7283983} = {962D0E70-9423-43D1-8C74-35DF94F6CFA2}
+		{7C28D13F-A0CC-4EC9-8257-847FBF91EC86} = {02858E99-E1F7-41A9-8AC4-CFF3C776471F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7182C1CA-D87E-45E4-8844-03A656B08746}
