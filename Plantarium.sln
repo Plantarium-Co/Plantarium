@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{0285
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Infrastructure", "src\Infrastructure\Plantarium.Infrastructure\Plantarium.Infrastructure.csproj", "{3C771F2D-3883-4FCD-9926-F4840FDEAA20}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Application", "src\Application\Plantarium.Application\Plantarium.Application.csproj", "{3F523A8D-3A80-4E61-9934-3266DA955B64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Api", "src\Application\Plantarium.Application\Plantarium.Api.csproj", "{3F523A8D-3A80-4E61-9934-3266DA955B64}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Service.User", "src\Service\Plantarium.Service.User\Plantarium.Service.User.csproj", "{EC4F70CB-D61B-4BA7-8D03-05CDF52469DF}"
 EndProject
@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Domain", "src\Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Service.Common", "src\Service\Plantarium.Service.Common\Plantarium.Service.Common.csproj", "{7C28D13F-A0CC-4EC9-8257-847FBF91EC86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plantarium.Data", "src\Infrastructure\Plantarium.Data\Plantarium.Data.csproj", "{A433E5E9-3DDA-4E89-9EC7-C9C35B27E28B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Data", "src\Infrastructure\Plantarium.Data\Plantarium.Data.csproj", "{A433E5E9-3DDA-4E89-9EC7-C9C35B27E28B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

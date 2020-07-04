@@ -3,31 +3,34 @@
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
-
 namespace Plantarium.Service.Common.Models
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     /// <summary>
     /// The base response.
     /// </summary>
     public class Response
     {
         /// <summary>
-        /// Gets a value indicating whether this <see cref="Response"/> is succeed.
+        /// Gets or sets the status.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if success; otherwise, <c>false</c>.
+        /// The status.
         /// </value>
-        public bool Success => this.Errors.Any();
+        public ResponseStatus Status { get; set; }
+    }
 
+    /// <summary>
+    /// The base response with data.
+    /// </summary>
+    /// <typeparam name="T">The data type.</typeparam>
+    public class Response<T> : Response
+    {
         /// <summary>
-        /// Gets or sets the errors.
+        /// Gets or sets the data.
         /// </summary>
         /// <value>
-        /// The errors.
+        /// The data.
         /// </value>
-        public List<string> Errors { get; set; } = new List<string>();
+        public T Data { get; set; }
     }
 }
