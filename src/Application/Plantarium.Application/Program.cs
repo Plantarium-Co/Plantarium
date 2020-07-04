@@ -11,7 +11,7 @@ namespace Plantarium.Application
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
-    using Plantarium.Infrastructure.Contexts;
+    using Plantarium.Data.Contexts;
 
     /// <summary>
     /// The execution program.

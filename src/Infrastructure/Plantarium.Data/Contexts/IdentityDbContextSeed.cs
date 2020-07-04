@@ -3,7 +3,7 @@
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Plantarium.Infrastructure.Contexts
+namespace Plantarium.Data.Contexts
 {
     using System;
     using System.Linq;
