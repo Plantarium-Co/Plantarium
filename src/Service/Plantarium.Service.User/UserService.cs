@@ -10,6 +10,7 @@ namespace Plantarium.Service.User
     using Plantarium.Infrastructure.Exceptions;
     using Plantarium.Infrastructure.Wrappers.Interfaces;
     using Plantarium.Service.Common.Exceptions;
+    using Plantarium.Service.Common.Models;
     using Plantarium.Service.User.Extensions;
     using Plantarium.Service.User.Models.Login;
     using Plantarium.Service.User.Models.Register;
@@ -59,11 +60,11 @@ namespace Plantarium.Service.User
             }
             catch (IdentityException ex)
             {
-                result.Errors.AddRange(ex.Errors);
+                result.Status.AddErrors(ex.Errors);
             }
             catch (ServiceDataException ex)
             {
-                result.Errors.Add(ex.Message);
+                result.Status.AddError(ex.Message);
             }
             catch (Exception ex)
             {
@@ -84,11 +85,11 @@ namespace Plantarium.Service.User
 
             try
             {
-                result.Token = await this.identityWrapper.AuthenticateAsync(request.Username, request.Password);
+                result.Data.Token = await this.identityWrapper.AuthenticateAsync(request.Username, request.Password);
             }
             catch (IdentityException ex)
             {
-                result.Errors.AddRange(ex.Errors);
+                result.Status.AddErrors(ex.Errors);
             }
             catch (Exception ex)
             {

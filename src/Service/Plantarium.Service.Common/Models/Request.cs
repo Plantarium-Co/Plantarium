@@ -6,7 +6,7 @@
 namespace Plantarium.Service.Common.Models
 {
     /// <summary>
-    /// The base service request.
+    /// The base request.
     /// </summary>
     public class Request
     {

@@ -3,7 +3,7 @@
 //     Plantarium, MIT
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Plantarium.Application
+namespace Plantarium.Api
 {
     using System;
     using System.Threading.Tasks;

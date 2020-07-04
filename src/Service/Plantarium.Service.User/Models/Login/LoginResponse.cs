@@ -10,8 +10,8 @@ namespace Plantarium.Service.User.Models.Login
     /// <summary>
     /// The login response.
     /// </summary>
-    /// <seealso cref="Plantarium.Service.Common.Models.Response" />
-    public class LoginResponse : Response
+    /// <seealso cref="Plantarium.Service.Common.Models.Response{Plantarium.Service.User.Models.Login.LoginResponse}" />
+    public class LoginResponse : Response<LoginResponse>
     {
         /// <summary>
         /// Gets or sets the token.
