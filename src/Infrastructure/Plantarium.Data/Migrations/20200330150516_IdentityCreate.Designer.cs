@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Plantarium.Infrastructure.Contexts;
+using Plantarium.Data.Contexts;
 
-namespace Plantarium.Infrastructure.Migrations
+namespace Plantarium.Data.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
     [Migration("20200330150516_IdentityCreate")]

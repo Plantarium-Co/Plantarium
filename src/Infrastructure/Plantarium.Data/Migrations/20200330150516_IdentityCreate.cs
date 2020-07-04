@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Plantarium.Infrastructure.Migrations
+namespace Plantarium.Data.Migrations
 {
     public partial class IdentityCreate : Migration
     {

@@ -16,8 +16,8 @@ namespace Plantarium.Application
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Plantarium.Data.Contexts;
     using Plantarium.Infrastructure.Configurations;
-    using Plantarium.Infrastructure.Contexts;
 
     /// <summary>
     /// The startup class used for configuring the services.
@@ -50,7 +50,7 @@ namespace Plantarium.Application
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(
                     this.Configuration.GetConnectionString("Database"),
-                    assemblyOptions => assemblyOptions.MigrationsAssembly("Plantarium.Infrastructure")));
+                    assemblyOptions => assemblyOptions.MigrationsAssembly("Plantarium.Data")));
 
             services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
