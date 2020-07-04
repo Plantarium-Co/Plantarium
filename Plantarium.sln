@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{0285
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Infrastructure", "src\Infrastructure\Plantarium.Infrastructure\Plantarium.Infrastructure.csproj", "{3C771F2D-3883-4FCD-9926-F4840FDEAA20}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Api", "src\Application\Plantarium.Application\Plantarium.Api.csproj", "{3F523A8D-3A80-4E61-9934-3266DA955B64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Api", "src\Application\Plantarium.Api\Plantarium.Api.csproj", "{3F523A8D-3A80-4E61-9934-3266DA955B64}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plantarium.Service.User", "src\Service\Plantarium.Service.User\Plantarium.Service.User.csproj", "{EC4F70CB-D61B-4BA7-8D03-05CDF52469DF}"
 EndProject
