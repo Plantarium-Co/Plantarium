@@ -11,43 +11,22 @@ namespace Plantarium.Service.User.Repositories
     using Plantarium.Infrastructure.Factories.Interfaces;
     using Plantarium.Infrastructure.Helpers.Interfaces;
     using Plantarium.Service.Common.Exceptions;
+    using Plantarium.Service.Common.Repositories;
     using Plantarium.Service.User.Repositories.Interfaces;
 
     /// <summary>
     /// The user repository.
     /// </summary>
     /// <seealso cref="Plantarium.Service.User.Repositories.Interfaces.IUserRepository" />
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository, IUserRepository
     {
-        /// <summary>
-        /// The default timeout.
-        /// </summary>
-        private static readonly int DefaultTimeout = 10;
-
-        /// <summary>
-        /// The builder factory.
-        /// </summary>
-        private readonly IDbCommandBuilderFactory builderFactory;
-
-        /// <summary>
-        /// The database helper.
-        /// </summary>
-        private readonly IDbHelper dbHelper;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UserRepository"/> class.
         /// </summary>
         /// <param name="builderFactory">The builder factory.</param>
         /// <param name="dbHelper">The database helper.</param>
-        /// <exception cref="ArgumentNullException">
-        /// builderFactory
-        /// or
-        /// dbHelper
-        /// </exception>
-        public UserRepository(IDbCommandBuilderFactory builderFactory, IDbHelper dbHelper)
+        public UserRepository(IDbCommandBuilderFactory builderFactory, IDbHelper dbHelper) : base(builderFactory, dbHelper)
         {
-            this.builderFactory = builderFactory;
-            this.dbHelper = dbHelper;
         }
 
         /// <summary>
@@ -59,14 +38,14 @@ namespace Plantarium.Service.User.Repositories
         {
             try
             {
-                var command = this.builderFactory
+                var command = this.BuilderFactory
                     .CreateSqlCommandBuilder()
                     .IsStoredProcedure("sp_CreateUser")
                     .WithTimeout(DefaultTimeout)
                     .WithParameters(user, data => new { data.IdentityId, data.GivenName, data.LastName })
                     .Build();
 
-                await this.dbHelper.ExecuteAsync(command);
+                await this.DbHelper.ExecuteAsync(command);
             }
             catch (Exception ex)
             {

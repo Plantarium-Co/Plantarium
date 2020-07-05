@@ -10,7 +10,6 @@ namespace Plantarium.Service.User
     using Plantarium.Infrastructure.Exceptions;
     using Plantarium.Infrastructure.Wrappers.Interfaces;
     using Plantarium.Service.Common.Exceptions;
-    using Plantarium.Service.Common.Models;
     using Plantarium.Service.User.Extensions;
     using Plantarium.Service.User.Models.Login;
     using Plantarium.Service.User.Models.Register;
