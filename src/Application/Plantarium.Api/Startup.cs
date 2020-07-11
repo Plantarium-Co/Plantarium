@@ -5,19 +5,14 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Api
 {
-    using System;
-    using System.Text;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.IdentityModel.Tokens;
-    using Plantarium.Data.Contexts;
-    using Plantarium.Infrastructure.Configurations;
+    using Plantarium.Data;
+    using Plantarium.Infrastructure;
+    using Plantarium.Service.User;
 
     /// <summary>
     /// The startup class used for configuring the services.
@@ -47,38 +42,9 @@ namespace Plantarium.Api
         /// <param name="services">The services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<IdentityDbContext>(options =>
-                options.UseSqlServer(
-                    this.Configuration.GetConnectionString("Database"),
-                    assemblyOptions => assemblyOptions.MigrationsAssembly("Plantarium.Data")));
-
-            services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<IdentityDbContext>()
-                .AddDefaultTokenProviders();
-
-            var jwtSection = this.Configuration.GetSection(nameof(JwtSettings));
-            var secret = jwtSection.GetValue<string>(nameof(JwtSettings.Secret));
-
-            services.AddAuthentication(authOpts =>
-            {
-                authOpts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                authOpts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(jwtOpts =>
-            {
-                jwtOpts.RequireHttpsMetadata = false;
-                jwtOpts.SaveToken = true;
-                jwtOpts.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
-
-            services.Configure<JwtSettings>(jwtSection);
-
+            services.AddData(this.Configuration);
+            services.AddInfrastructure(this.Configuration);
+            services.AddUserService();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -97,6 +63,12 @@ namespace Plantarium.Api
             {
                 app.UseHsts();
             }
+
+            app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin()
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
 

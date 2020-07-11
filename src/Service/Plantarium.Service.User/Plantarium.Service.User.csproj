@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="StyleCop.Cache" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Plantarium.Service.Common\Plantarium.Service.Common.csproj" />
   </ItemGroup>
 
