@@ -10,6 +10,7 @@ namespace Plantarium.Service.User
     using Plantarium.Infrastructure.Exceptions;
     using Plantarium.Infrastructure.Wrappers.Interfaces;
     using Plantarium.Service.Common.Exceptions;
+    using Plantarium.Service.Common.Models;
     using Plantarium.Service.User.Extensions;
     using Plantarium.Service.User.Models.Login;
     using Plantarium.Service.User.Models.Register;
@@ -46,10 +47,10 @@ namespace Plantarium.Service.User
         /// Registers the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>The register response.</returns>
-        public async Task<RegisterResponse> Register(RegisterRequest request)
+        /// <returns>The service response.</returns>
+        public async Task<ServiceResponse> Register(RegisterRequest request)
         {
-            var result = new RegisterResponse();
+            var response = new ServiceResponse();
 
             try
             {
@@ -59,43 +60,45 @@ namespace Plantarium.Service.User
             }
             catch (IdentityException ex)
             {
-                result.Status.AddErrors(ex.Errors);
+                response.Status.AddError(ex.Message);
+                response.Status.AddErrors(ex.Errors);
             }
             catch (ServiceDataException ex)
             {
-                result.Status.AddError(ex.Message);
+                response.Status.AddError(ex.Message);
             }
             catch (Exception ex)
             {
                 throw new ServiceException(ex.Message, ex);
             }
 
-            return result;
+            return response;
         }
 
         /// <summary>
         /// Logins the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>The login response.</returns>
-        public async Task<LoginResponse> Login(LoginRequest request)
+        /// <returns>The service login response.</returns>
+        public async Task<ServiceResponse<LoginResponse>> Login(LoginRequest request)
         {
-            var result = new LoginResponse();
+            var response = new ServiceResponse<LoginResponse>();
 
             try
             {
-                result.Data.Token = await this.identityWrapper.AuthenticateAsync(request.Username, request.Password);
+                response.Data.Token = await this.identityWrapper.AuthenticateAsync(request.Username, request.Password);
             }
             catch (IdentityException ex)
             {
-                result.Status.AddErrors(ex.Errors);
+                response.Status.AddError(ex.Message);
+                response.Status.AddErrors(ex.Errors);
             }
             catch (Exception ex)
             {
                 throw new ServiceException(ex.Message, ex);
             }
 
-            return result;
+            return response;
         }
     }
 }

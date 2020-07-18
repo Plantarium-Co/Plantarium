@@ -24,7 +24,7 @@ namespace Plantarium.Service.Common.Models
         /// <value>
         ///   <c>true</c> if success; otherwise, <c>false</c>.
         /// </value>
-        public bool Success => this.errors.Any();
+        public bool Success => !this.errors.Any();
 
         /// <summary>
         /// Gets the errors.
