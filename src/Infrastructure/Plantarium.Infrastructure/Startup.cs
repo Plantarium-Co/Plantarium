@@ -37,7 +37,7 @@ namespace Plantarium.Infrastructure
         {
             AddIdentity(services);
             AddAuthentication(services, configuration);
-            AddDatabase(services);
+            AddDatabase(services, configuration);
         }
 
         /// <summary>
@@ -46,10 +46,6 @@ namespace Plantarium.Infrastructure
         /// <param name="services">The services.</param>
         private static void AddIdentity(IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<IdentityDbContext>()
-                .AddDefaultTokenProviders();
-
             services.AddScoped<ITokenProvider, TokenProvider>();
             services.AddScoped<IIdentityWrapper, IdentityWrapper>();
         }
@@ -89,11 +85,12 @@ namespace Plantarium.Infrastructure
         /// Adds the database.
         /// </summary>
         /// <param name="services">The services.</param>
-        private static void AddDatabase(IServiceCollection services)
+        /// <param name="configuration">The configuration.</param>
+        private static void AddDatabase(IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<ITransactionScopeFactory, TransactionScopeFactory>();
             services.AddSingleton<IDbCommandBuilderFactory, DbCommandBuilderFactory>();
-            services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+            services.AddScoped<IDbConnectionFactory>(_ => new DbConnectionFactory(configuration.GetConnectionString("Database")));
             services.AddScoped<IDbHelper, SqlHelper>();
         }
     }
