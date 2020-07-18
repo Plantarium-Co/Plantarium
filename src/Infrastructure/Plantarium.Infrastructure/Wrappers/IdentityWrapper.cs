@@ -174,7 +174,7 @@ namespace Plantarium.Infrastructure.Wrappers
 
             if (!signInResult.Succeeded)
             {
-                throw new IdentityException("Sign in failed.");
+                throw new IdentityException("Sign in failed.", new[] { new IdentityError { Description = "Username or Password is incorrect." } });
             }
 
             var user = await this.userManager.FindByNameAsync(username);

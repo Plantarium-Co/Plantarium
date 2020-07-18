@@ -13,7 +13,7 @@ namespace Plantarium.Api.Controllers
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public abstract class BaseController : ControllerBase
     {
         /// <summary>
@@ -21,7 +21,7 @@ namespace Plantarium.Api.Controllers
         /// </summary>
         /// <param name="response">The service response.</param>
         /// <returns>The response.</returns>
-        public virtual IActionResult CreateResponse(Response response)
+        public virtual IActionResult CreateResponse(ServiceResponse response)
         {
             if (!response.Status.Success)
             {
@@ -37,7 +37,7 @@ namespace Plantarium.Api.Controllers
         /// <typeparam name="T">The service response type.</typeparam>
         /// <param name="response">The service response.</param>
         /// <returns>The response with data.</returns>
-        public virtual IActionResult CreateResponse<T>(Response<T> response)
+        public virtual IActionResult CreateResponse<T>(ServiceResponse<T> response) where T : Response, new()
         {
             if (!response.Status.Success)
             {

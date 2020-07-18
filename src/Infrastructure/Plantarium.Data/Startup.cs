@@ -5,10 +5,12 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Data
 {
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using System;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Plantarium.Data.Contexts;
 
     /// <summary>
     /// The data startup.
@@ -26,6 +28,10 @@ namespace Plantarium.Data
                 options.UseSqlServer(
                     configuration.GetConnectionString("Database"),
                     assemblyOptions => assemblyOptions.MigrationsAssembly("Plantarium.Data")));
+
+            services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddDefaultTokenProviders();
         }
     }
 }

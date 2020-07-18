@@ -6,6 +6,7 @@
 namespace Plantarium.Service.User
 {
     using System.Threading.Tasks;
+    using Plantarium.Service.Common.Models;
     using Plantarium.Service.User.Models.Login;
     using Plantarium.Service.User.Models.Register;
 
@@ -18,14 +19,14 @@ namespace Plantarium.Service.User
         /// Logins the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>The login response.</returns>
-        Task<LoginResponse> Login(LoginRequest request);
+        /// <returns>The service login response.</returns>
+        Task<ServiceResponse<LoginResponse>> Login(LoginRequest request);
 
         /// <summary>
         /// Registers the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>The register response.</returns>
-        Task<RegisterResponse> Register(RegisterRequest request);
+        /// <returns>The service response.</returns>
+        Task<ServiceResponse> Register(RegisterRequest request);
     }
 }
