@@ -35,7 +35,7 @@ namespace Plantarium.Infrastructure
         /// <param name="configuration">The configuration.</param>
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            AddIdentity(services);
+            AddIdentity(services, configuration);
             AddAuthentication(services, configuration);
             AddDatabase(services, configuration);
         }
@@ -44,10 +44,11 @@ namespace Plantarium.Infrastructure
         /// Adds the identity.
         /// </summary>
         /// <param name="services">The services.</param>
-        private static void AddIdentity(IServiceCollection services)
+        private static void AddIdentity(IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<ITokenProvider, TokenProvider>();
             services.AddScoped<IIdentityWrapper, IdentityWrapper>();
+            services.Configure<IdentityOptions>(configuration.GetSection(nameof(IdentityOptions)));
         }
 
         /// <summary>

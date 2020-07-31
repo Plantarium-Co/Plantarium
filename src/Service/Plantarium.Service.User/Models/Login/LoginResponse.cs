@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Service.User.Models.Login
 {
+    using Newtonsoft.Json;
     using Plantarium.Service.Common.Models;
 
     /// <summary>
@@ -19,6 +20,7 @@ namespace Plantarium.Service.User.Models.Login
         /// <value>
         /// The token.
         /// </value>
+        [JsonProperty("token")]
         public string Token { get; set; }
     }
 }

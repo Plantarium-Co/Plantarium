@@ -15,6 +15,14 @@ namespace Plantarium.Service.User.Models.Register
     public class RegisterRequest : Request
     {
         /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        /// <value>
+        /// The email.
+        /// </value>
+        public string Email { get; set; }
+
+        /// <summary>
         /// Gets or sets the username.
         /// </summary>
         /// <value>

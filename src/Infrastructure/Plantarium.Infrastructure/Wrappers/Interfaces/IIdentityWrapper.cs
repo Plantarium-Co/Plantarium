@@ -17,10 +17,11 @@ namespace Plantarium.Infrastructure.Wrappers.Interfaces
         /// <summary>
         /// Registers the asynchronous.
         /// </summary>
+        /// <param name="email">The email.</param>
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns>The identity user id.</returns>
-        Task<Guid> RegisterAsync(string username, string password);
+        Task<Guid> RegisterAsync(string email, string username, string password);
 
         /// <summary>
         /// Adds to role asynchronous.
