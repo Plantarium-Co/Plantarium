@@ -172,11 +172,12 @@ namespace Plantarium.Infrastructure.Wrappers
         /// <exception cref="Plantarium.Infrastructure.Exceptions.IdentityException">Sign in failed.</exception>
         public async Task<string> AuthenticateAsync(string username, string password)
         {
-            var signInResult = await this.signInManager.PasswordSignInAsync(username, password, false, true);
+            var identifiedUsername = await this.IdentifyUsernameAsync(username);
+            var signInResult = await this.signInManager.PasswordSignInAsync(identifiedUsername, password, false, true);
 
             if (!signInResult.Succeeded)
             {
-                if(signInResult.IsLockedOut)
+                if (signInResult.IsLockedOut)
                 {
                     throw new IdentityException("Sign in failed.", new[] { new IdentityError { Description = "Too many failed attempts. Try again later." } });
                 }
@@ -184,7 +185,7 @@ namespace Plantarium.Infrastructure.Wrappers
                 throw new IdentityException("Sign in failed.", new[] { new IdentityError { Description = "Username or Password is incorrect." } });
             }
 
-            var user = await this.userManager.FindByNameAsync(username);
+            var user = await this.userManager.FindByNameAsync(identifiedUsername);
             var claims = await this.userManager.GetClaimsAsync(user);
             var result = this.tokenProvider.GenerateToken(claims);
 
@@ -207,6 +208,28 @@ namespace Plantarium.Infrastructure.Wrappers
             };
 
             var result = await this.userManager.AddClaimsAsync(user, claims);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Identifies the username asynchronous.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>The username.</returns>
+        private async Task<string> IdentifyUsernameAsync(string username)
+        {
+            var result = username;
+
+            if (username.Contains("@"))
+            {
+                var user = await this.userManager.FindByEmailAsync(username);
+
+                if (user != null)
+                {
+                    result = user.UserName;
+                }
+            }
 
             return result;
         }
