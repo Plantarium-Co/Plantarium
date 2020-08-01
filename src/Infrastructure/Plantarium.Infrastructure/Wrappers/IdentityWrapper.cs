@@ -72,6 +72,7 @@ namespace Plantarium.Infrastructure.Wrappers
         /// <summary>
         /// Registers the asynchronous.
         /// </summary>
+        /// <param name="email">The email.</param>
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns>The identity user id.</returns>
@@ -80,9 +81,10 @@ namespace Plantarium.Infrastructure.Wrappers
         /// or
         /// Claim Registration failed.
         /// </exception>
-        public async Task<Guid> RegisterAsync(string username, string password)
+        public async Task<Guid> RegisterAsync(string email, string username, string password)
         {
-            var createResult = await this.userManager.CreateAsync(new IdentityUser<Guid>(username), password);
+            var user = new IdentityUser<Guid>(username) { Email = email };
+            var createResult = await this.userManager.CreateAsync(user, password);
 
             if (!createResult.Succeeded)
             {
@@ -96,7 +98,7 @@ namespace Plantarium.Infrastructure.Wrappers
                 throw new IdentityException("Claim Registration failed.", registerClaimResult.Errors);
             }
 
-            var user = await this.userManager.FindByNameAsync(username);
+            user = await this.userManager.FindByNameAsync(username);
 
             return user.Id;
         }
@@ -170,14 +172,20 @@ namespace Plantarium.Infrastructure.Wrappers
         /// <exception cref="Plantarium.Infrastructure.Exceptions.IdentityException">Sign in failed.</exception>
         public async Task<string> AuthenticateAsync(string username, string password)
         {
-            var signInResult = await this.signInManager.PasswordSignInAsync(username, password, false, false);
+            var identifiedUsername = await this.IdentifyUsernameAsync(username);
+            var signInResult = await this.signInManager.PasswordSignInAsync(identifiedUsername, password, false, true);
 
             if (!signInResult.Succeeded)
             {
+                if (signInResult.IsLockedOut)
+                {
+                    throw new IdentityException("Sign in failed.", new[] { new IdentityError { Description = "Too many failed attempts. Try again later." } });
+                }
+
                 throw new IdentityException("Sign in failed.", new[] { new IdentityError { Description = "Username or Password is incorrect." } });
             }
 
-            var user = await this.userManager.FindByNameAsync(username);
+            var user = await this.userManager.FindByNameAsync(identifiedUsername);
             var claims = await this.userManager.GetClaimsAsync(user);
             var result = this.tokenProvider.GenerateToken(claims);
 
@@ -194,11 +202,34 @@ namespace Plantarium.Infrastructure.Wrappers
             var user = await this.userManager.FindByNameAsync(username);
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             var result = await this.userManager.AddClaimsAsync(user, claims);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Identifies the username asynchronous.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>The username.</returns>
+        private async Task<string> IdentifyUsernameAsync(string username)
+        {
+            var result = username;
+
+            if (username.Contains("@"))
+            {
+                var user = await this.userManager.FindByEmailAsync(username);
+
+                if (user != null)
+                {
+                    result = user.UserName;
+                }
+            }
 
             return result;
         }

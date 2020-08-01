@@ -54,7 +54,7 @@ namespace Plantarium.Service.User
 
             try
             {
-                var identityId = await this.identityWrapper.RegisterAsync(request.Username, request.Password);
+                var identityId = await this.identityWrapper.RegisterAsync(request.Email, request.Username, request.Password);
                 await this.identityWrapper.AddToRoleAsync(request.Username, request.Role);
                 await this.userRepository.CreateUserAsync(request.ToUser(identityId));
             }
