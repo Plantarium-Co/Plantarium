@@ -44,6 +44,7 @@ namespace Plantarium.Infrastructure
         /// Adds the identity.
         /// </summary>
         /// <param name="services">The services.</param>
+        /// <param name="configuration">The configuration.</param>
         private static void AddIdentity(IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<ITokenProvider, TokenProvider>();
