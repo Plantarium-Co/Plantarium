@@ -7,14 +7,13 @@ namespace Plantarium.Service.User
 {
     using System;
     using System.Threading.Tasks;
-    using Plantarium.Infrastructure.Exceptions;
     using Plantarium.Infrastructure.Wrappers.Interfaces;
-    using Plantarium.Service.Common.Exceptions;
     using Plantarium.Service.Common.Models;
     using Plantarium.Service.User.Extensions;
     using Plantarium.Service.User.Models.Login;
     using Plantarium.Service.User.Models.Register;
     using Plantarium.Service.User.Repositories.Interfaces;
+    using static Plantarium.Service.Common.Exceptions.ExceptionManager;
 
     /// <summary>
     /// The user service.
@@ -37,7 +36,9 @@ namespace Plantarium.Service.User
         /// </summary>
         /// <param name="identityWrapper">The identity wrapper.</param>
         /// <param name="userRepository">The user repository.</param>
-        public UserService(IIdentityWrapper identityWrapper, IUserRepository userRepository)
+        public UserService(
+            IIdentityWrapper identityWrapper,
+            IUserRepository userRepository)
         {
             this.identityWrapper = identityWrapper;
             this.userRepository = userRepository;
@@ -54,22 +55,14 @@ namespace Plantarium.Service.User
 
             try
             {
+                request.ValidateAndThrow(new RegisterRequestValidator());
                 var identityId = await this.identityWrapper.RegisterAsync(request.Email, request.Username, request.Password);
                 await this.identityWrapper.AddToRoleAsync(request.Username, request.Role);
                 await this.userRepository.CreateUserAsync(request.ToUser(identityId));
             }
-            catch (IdentityException ex)
-            {
-                response.Status.AddError(ex.Message);
-                response.Status.AddErrors(ex.Errors);
-            }
-            catch (ServiceDataException ex)
-            {
-                response.Status.AddError(ex.Message);
-            }
             catch (Exception ex)
             {
-                throw new ServiceException(ex.Message, ex);
+                AddErrors(ex, response.Status);
             }
 
             return response;
@@ -86,16 +79,12 @@ namespace Plantarium.Service.User
 
             try
             {
+                request.ValidateAndThrow(new LoginRequestValidator());
                 response.Data.Token = await this.identityWrapper.AuthenticateAsync(request.Username, request.Password);
-            }
-            catch (IdentityException ex)
-            {
-                response.Status.AddError(ex.Message);
-                response.Status.AddErrors(ex.Errors);
             }
             catch (Exception ex)
             {
-                throw new ServiceException(ex.Message, ex);
+                AddErrors(ex, response.Status);
             }
 
             return response;

@@ -216,7 +216,7 @@ namespace Plantarium.Infrastructure.Wrappers
         /// Identifies the username asynchronous.
         /// </summary>
         /// <param name="username">The username.</param>
-        /// <returns>The username.</returns>
+        /// <returns>The identified username.</returns>
         private async Task<string> IdentifyUsernameAsync(string username)
         {
             var result = username;

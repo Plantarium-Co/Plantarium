@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Infrastructure.Helpers
 {
+    using System;
     using System.Collections.Generic;
     using System.Data.Common;
     using System.Threading.Tasks;
@@ -56,7 +57,7 @@ namespace Plantarium.Infrastructure.Helpers
                     await command.ExecuteNonQueryAsync();
                     transactionScope.Complete();
                 }
-                catch (DbException ex)
+                catch (Exception ex)
                 {
                     throw ex;
                 }
@@ -93,7 +94,7 @@ namespace Plantarium.Infrastructure.Helpers
 
                     transactionScope.Complete();
                 }
-                catch (DbException ex)
+                catch (Exception ex)
                 {
                     throw ex;
                 }
@@ -130,7 +131,7 @@ namespace Plantarium.Infrastructure.Helpers
 
                     transactionScope.Complete();
                 }
-                catch (DbException ex)
+                catch (Exception ex)
                 {
                     throw ex;
                 }
