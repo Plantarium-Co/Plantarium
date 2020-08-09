@@ -33,28 +33,31 @@ namespace Plantarium.Infrastructure.Logging
         /// <summary>
         /// Logs an information.
         /// </summary>
-        /// <param name="message">The message.</param>
-        public void Information(string message)
+        /// <param name="messageTemplate">The message template.</param>
+        /// <param name="args">The arguments.</param>
+        public void Information(string messageTemplate, params object[] args)
         {
-            this.logger.Information(message);
+            this.logger.Information(messageTemplate, args);
         }
 
         /// <summary>
         /// Logs a warning.
         /// </summary>
-        /// <param name="message">The message.</param>
-        public void Warning(string message)
+        /// <param name="messageTemplate">The message template.</param>
+        /// <param name="args">The arguments.</param>
+        public void Warning(string messageTemplate, params object[] args)
         {
-            this.logger.Warning(message);
+            this.logger.Warning(messageTemplate, args);
         }
 
         /// <summary>
         /// Logs an error.
         /// </summary>
-        /// <param name="message">The message.</param>
-        public void Error(string message)
+        /// <param name="messageTemplate">The message template.</param>
+        /// <param name="args">The arguments.</param>
+        public void Error(string messageTemplate, params object[] args)
         {
-            this.logger.Error(message);
+            this.logger.Error(messageTemplate, args);
         }
     }
 }

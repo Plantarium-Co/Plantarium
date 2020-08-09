@@ -13,19 +13,22 @@ namespace Plantarium.Infrastructure.Logging.Interfaces
         /// <summary>
         /// Logs an error.
         /// </summary>
-        /// <param name="message">The message.</param>
-        void Error(string message);
+        /// <param name="messageTemplate">The message template.</param>
+        /// <param name="args">The arguments.</param>
+        void Error(string messageTemplate, params object[] args);
 
         /// <summary>
         /// Logs an information.
         /// </summary>
-        /// <param name="message">The message.</param>
-        void Information(string message);
+        /// <param name="messageTemplate">The message template.</param>
+        /// <param name="args">The arguments.</param>
+        void Information(string messageTemplate, params object[] args);
 
         /// <summary>
         /// Logs a warning.
         /// </summary>
-        /// <param name="message">The message.</param>
-        void Warning(string message);
+        /// <param name="messageTemplate">The message template.</param>
+        /// <param name="args">The arguments.</param>
+        void Warning(string messageTemplate, params object[] args);
     }
 }

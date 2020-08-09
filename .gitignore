@@ -221,5 +221,6 @@ __pycache__/
 # Windows thumbnail cache files
 Thumbs.db
 
-!Plantarium.Service.User
-**/Plantarium.Service.User/StyleCop.Cache
+!**/Service/**/*.User
+**/Service/**/[Ss]tyleCop.[Cc]ache
+**/Application/**/Logs/

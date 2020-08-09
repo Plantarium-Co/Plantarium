@@ -88,14 +88,14 @@ namespace Plantarium.Infrastructure.Wrappers
 
             if (!createResult.Succeeded)
             {
-                throw new IdentityException("Registration failed.", createResult.Errors);
+                throw new IdentityException("Registration failed", createResult.Errors);
             }
 
             var registerClaimResult = await this.RegisterClaimsAsync(username);
 
             if (!registerClaimResult.Succeeded)
             {
-                throw new IdentityException("Claim Registration failed.", registerClaimResult.Errors);
+                throw new IdentityException("Claim registration failed", registerClaimResult.Errors);
             }
 
             user = await this.userManager.FindByNameAsync(username);
@@ -123,14 +123,14 @@ namespace Plantarium.Infrastructure.Wrappers
 
             if (!addRoleResult.Succeeded)
             {
-                throw new IdentityException("Role assignment failed.", addRoleResult.Errors);
+                throw new IdentityException("Role assignment failed", addRoleResult.Errors);
             }
 
             var addRoleClaimResult = await this.userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role.ToString()));
 
             if (!addRoleClaimResult.Succeeded)
             {
-                throw new IdentityException("Role claim assignment failed.", addRoleClaimResult.Errors);
+                throw new IdentityException("Role claim assignment failed", addRoleClaimResult.Errors);
             }
         }
 
@@ -152,14 +152,14 @@ namespace Plantarium.Infrastructure.Wrappers
 
             if (!removeRoleResult.Succeeded)
             {
-                throw new IdentityException("Role removal failed.", removeRoleResult.Errors);
+                throw new IdentityException("Role removal failed", removeRoleResult.Errors);
             }
 
             var removeRoleClaimResult = await this.userManager.RemoveClaimAsync(user, new Claim(ClaimTypes.Role, role.ToString()));
 
             if (!removeRoleClaimResult.Succeeded)
             {
-                throw new IdentityException("Role claim removal failed.", removeRoleClaimResult.Errors);
+                throw new IdentityException("Role claim removal failed", removeRoleClaimResult.Errors);
             }
         }
 
@@ -179,10 +179,10 @@ namespace Plantarium.Infrastructure.Wrappers
             {
                 if (signInResult.IsLockedOut)
                 {
-                    throw new IdentityException("Sign in failed.", new[] { new IdentityError { Description = "Too many failed attempts. Try again later." } });
+                    throw new IdentityException("Sign in failed", new[] { new IdentityError { Description = "Too many failed attempts. Try again later." } });
                 }
 
-                throw new IdentityException("Sign in failed.", new[] { new IdentityError { Description = "Username or Password is incorrect." } });
+                throw new IdentityException("Sign in failed", new[] { new IdentityError { Description = "Username or Password is incorrect." } });
             }
 
             var user = await this.userManager.FindByNameAsync(identifiedUsername);

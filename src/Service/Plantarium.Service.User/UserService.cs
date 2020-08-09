@@ -7,6 +7,7 @@ namespace Plantarium.Service.User
 {
     using System;
     using System.Threading.Tasks;
+    using Plantarium.Infrastructure.Logging.Interfaces;
     using Plantarium.Infrastructure.Wrappers.Interfaces;
     using Plantarium.Service.Common.Models;
     using Plantarium.Service.User.Extensions;
@@ -22,6 +23,11 @@ namespace Plantarium.Service.User
     public class UserService : IUserService
     {
         /// <summary>
+        /// The logger.
+        /// </summary>
+        private readonly ILogger logger;
+
+        /// <summary>
         /// The identity wrapper
         /// </summary>
         private readonly IIdentityWrapper identityWrapper;
@@ -34,12 +40,15 @@ namespace Plantarium.Service.User
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
+        /// <param name="logger">The logger.</param>
         /// <param name="identityWrapper">The identity wrapper.</param>
         /// <param name="userRepository">The user repository.</param>
         public UserService(
+            ILogger logger,
             IIdentityWrapper identityWrapper,
             IUserRepository userRepository)
         {
+            this.logger = logger;
             this.identityWrapper = identityWrapper;
             this.userRepository = userRepository;
         }
@@ -63,6 +72,7 @@ namespace Plantarium.Service.User
             catch (Exception ex)
             {
                 AddErrors(ex, response.Status);
+                this.logger.Error("{Error} encountered by {Username} on register", response.Status.Error.Title, request.Username);
             }
 
             return response;
@@ -85,6 +95,7 @@ namespace Plantarium.Service.User
             catch (Exception ex)
             {
                 AddErrors(ex, response.Status);
+                this.logger.Error("{Error} encountered by {Username} on login", response.Status.Error.Title, request.Username);
             }
 
             return response;
