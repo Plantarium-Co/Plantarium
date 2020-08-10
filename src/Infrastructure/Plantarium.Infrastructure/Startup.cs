@@ -5,11 +5,9 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Infrastructure
 {
-    using System;
     using System.Text;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
@@ -18,6 +16,8 @@ namespace Plantarium.Infrastructure
     using Plantarium.Infrastructure.Factories.Interfaces;
     using Plantarium.Infrastructure.Helpers;
     using Plantarium.Infrastructure.Helpers.Interfaces;
+    using Plantarium.Infrastructure.Logging;
+    using Plantarium.Infrastructure.Logging.Interfaces;
     using Plantarium.Infrastructure.Providers;
     using Plantarium.Infrastructure.Providers.Interfaces;
     using Plantarium.Infrastructure.Wrappers;
@@ -38,6 +38,8 @@ namespace Plantarium.Infrastructure
             AddIdentity(services, configuration);
             AddAuthentication(services, configuration);
             AddDatabase(services, configuration);
+
+            services.AddSingleton<ILogger>(new FileLogger(configuration));
         }
 
         /// <summary>

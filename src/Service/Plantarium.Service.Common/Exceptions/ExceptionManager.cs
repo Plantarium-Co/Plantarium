@@ -27,16 +27,16 @@ namespace Plantarium.Service.Common.Exceptions
             switch (ex)
             {
                 case ValidationException validationException:
-                    responseStatus.AddError("Validation Failed.");
-                    responseStatus.AddErrors(validationException.Errors.Select(error => error.ErrorMessage));
+                    responseStatus.Error.Title = "Validation Failed";
+                    responseStatus.Error.Errors.AddRange(validationException.Errors.Select(error => error.ErrorMessage));
                     break;
                 case IdentityException identityException:
-                    responseStatus.AddError(identityException.Message);
-                    responseStatus.AddErrors(identityException.Errors);
+                    responseStatus.Error.Title = identityException.Message;
+                    responseStatus.Error.Errors.AddRange(identityException.Errors);
                     break;
                 case ServiceDataException serviceDataException:
-                    responseStatus.AddError("Data Failed.");
-                    responseStatus.AddError(ex.Message);
+                    responseStatus.Error.Title = "Data Failed";
+                    responseStatus.Error.Errors.Add(ex.Message);
                     break;
                 default:
                     throw new ServiceException(ex.Message, ex);

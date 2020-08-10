@@ -25,7 +25,7 @@ namespace Plantarium.Api.Controllers
         {
             if (!response.Status.Success)
             {
-                return this.BadRequest(response.Status.Errors);
+                return this.BadRequest(response.Status.Error);
             }
 
             return this.Ok();
@@ -41,7 +41,7 @@ namespace Plantarium.Api.Controllers
         {
             if (!response.Status.Success)
             {
-                return this.BadRequest(response.Status.Errors);
+                return this.BadRequest(response.Status.Error);
             }
 
             return this.Ok(response.Data);

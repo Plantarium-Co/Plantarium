@@ -5,7 +5,6 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Service.Common.Models
 {
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -14,36 +13,19 @@ namespace Plantarium.Service.Common.Models
     public class ResponseStatus
     {
         /// <summary>
-        /// The errors.
-        /// </summary>
-        private readonly List<string> errors = new List<string>();
-
-        /// <summary>
         /// Gets a value indicating whether this <see cref="ResponseStatus"/> is success.
         /// </summary>
         /// <value>
         ///   <c>true</c> if success; otherwise, <c>false</c>.
         /// </value>
-        public bool Success => !this.errors.Any();
+        public bool Success => !this.Error.Errors.Any();
 
         /// <summary>
-        /// Gets the errors.
+        /// Gets the error.
         /// </summary>
         /// <value>
-        /// The errors.
+        /// The error.
         /// </value>
-        public string[] Errors => this.errors.ToArray();
-
-        /// <summary>
-        /// Adds the error.
-        /// </summary>
-        /// <param name="error">The error.</param>
-        public void AddError(string error) => this.errors.Add(error);
-
-        /// <summary>
-        /// Adds the errors.
-        /// </summary>
-        /// <param name="errors">The errors.</param>
-        public void AddErrors(IEnumerable<string> errors) => this.errors.AddRange(errors);
+        public ResponseError Error { get; } = new ResponseError();
     }
 }
