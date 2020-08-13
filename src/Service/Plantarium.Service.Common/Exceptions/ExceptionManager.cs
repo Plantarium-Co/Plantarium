@@ -35,9 +35,7 @@ namespace Plantarium.Service.Common.Exceptions
                     responseStatus.Error.Errors.AddRange(identityException.Errors);
                     break;
                 case ServiceDataException serviceDataException:
-                    responseStatus.Error.Title = "Data Failed";
-                    responseStatus.Error.Errors.Add(ex.Message);
-                    break;
+                    throw serviceDataException;
                 default:
                     throw new ServiceException(ex.Message, ex);
             }

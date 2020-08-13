@@ -49,7 +49,7 @@ namespace Plantarium.Service.User.Repositories
             }
             catch (Exception ex)
             {
-                throw new ServiceDataException(ex.Message);
+                throw new ServiceDataException(ex.Message, ex);
             }
         }
     }
