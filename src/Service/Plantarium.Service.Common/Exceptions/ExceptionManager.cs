@@ -17,14 +17,25 @@ namespace Plantarium.Service.Common.Exceptions
     public static class ExceptionManager
     {
         /// <summary>
+        /// Determines whether [is client error] [the specified exception].
+        /// </summary>
+        /// <param name="exception">The exception.</param>
+        /// <returns>
+        ///   <c>true</c> if [is client error] [the specified exception]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsClientError(Exception exception)
+        {
+            return exception is ValidationException || exception is IdentityException;
+        }
+
+        /// <summary>
         /// Adds the errors.
         /// </summary>
-        /// <param name="ex">The ex.</param>
+        /// <param name="exception">The exception.</param>
         /// <param name="responseStatus">The response status.</param>
-        /// <exception cref="ServiceException">The service exception.</exception>
-        public static void AddErrors(Exception ex, ResponseStatus responseStatus)
+        public static void AddErrors(Exception exception, ResponseStatus responseStatus)
         {
-            switch (ex)
+            switch (exception)
             {
                 case ValidationException validationException:
                     responseStatus.Error.Title = "Validation Failed";
@@ -34,10 +45,8 @@ namespace Plantarium.Service.Common.Exceptions
                     responseStatus.Error.Title = identityException.Message;
                     responseStatus.Error.Errors.AddRange(identityException.Errors);
                     break;
-                case ServiceDataException serviceDataException:
-                    throw serviceDataException;
                 default:
-                    throw new ServiceException(ex.Message, ex);
+                    throw exception;
             }
         }
     }

@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Infrastructure.Logging
 {
+    using System;
     using Microsoft.Extensions.Configuration;
     using Serilog;
     using Internal = Interfaces;
@@ -53,11 +54,12 @@ namespace Plantarium.Infrastructure.Logging
         /// <summary>
         /// Logs an error.
         /// </summary>
+        /// <param name="exception">The exception.</param>
         /// <param name="messageTemplate">The message template.</param>
         /// <param name="args">The arguments.</param>
-        public void Error(string messageTemplate, params object[] args)
+        public void Error(Exception exception, string messageTemplate, params object[] args)
         {
-            this.logger.Error(messageTemplate, args);
+            this.logger.Error(exception, messageTemplate, args);
         }
     }
 }

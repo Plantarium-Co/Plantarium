@@ -52,6 +52,7 @@ namespace Plantarium.Api.Middlewares
         /// Invokes the asynchronous.
         /// </summary>
         /// <param name="context">The context.</param>
+        /// <returns>The task.</returns>
         public async Task InvokeAsync(HttpContext context)
         {
             try
@@ -72,15 +73,15 @@ namespace Plantarium.Api.Middlewares
         /// <returns>The task.</returns>
         private Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
-            this.logger.Error(ex.Message, ex);
+            this.logger.Error(ex, "Unhandled exception");
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            if (this.hostingEnvironment.IsProduction())
+            if (this.hostingEnvironment.IsDevelopment())
             {
-                return context.Response.WriteAsync("Service unavailable. Try again later.");
+                return context.Response.WriteAsync(ex.ToString());
             }
 
-            return context.Response.WriteAsync(ex.Message);
+            return context.Response.WriteAsync("Service unavailable. Try again later.");
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Plantarium.Api
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
     using Plantarium.Data.Contexts;
+    using Plantarium.Infrastructure.Logging.Interfaces;
+    using static Plantarium.Data.Contexts.IdentityDbContextSeed;
 
     /// <summary>
     /// The execution program.
@@ -30,15 +32,17 @@ namespace Plantarium.Api
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                var logger = services.GetRequiredService<ILogger>();
+
                 try
                 {
                     var context = services.GetRequiredService<IdentityDbContext>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
-                    await IdentityDbContextSeed.SeedAsync(context, roleManager);
+                    await SeedAsync(context, roleManager);
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
-                    // Todo: Logging
+                    logger.Error(exception, "Role seeding failed");
                 }
             }
 

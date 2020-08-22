@@ -5,6 +5,8 @@
 // -----------------------------------------------------------------------
 namespace Plantarium.Infrastructure.Logging.Interfaces
 {
+    using System;
+
     /// <summary>
     /// The logger.
     /// </summary>
@@ -13,9 +15,10 @@ namespace Plantarium.Infrastructure.Logging.Interfaces
         /// <summary>
         /// Logs an error.
         /// </summary>
+        /// <param name="exception">The exception.</param>
         /// <param name="messageTemplate">The message template.</param>
         /// <param name="args">The arguments.</param>
-        void Error(string messageTemplate, params object[] args);
+        void Error(Exception exception, string messageTemplate, params object[] args);
 
         /// <summary>
         /// Logs an information.
