@@ -10,6 +10,7 @@ namespace Plantarium.Api
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Plantarium.Api.Middlewares;
     using Plantarium.Data;
     using Plantarium.Infrastructure;
     using Plantarium.Service.User;
@@ -73,6 +74,8 @@ namespace Plantarium.Api
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseMvc();
         }

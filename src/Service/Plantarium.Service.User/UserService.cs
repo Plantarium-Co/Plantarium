@@ -9,6 +9,7 @@ namespace Plantarium.Service.User
     using System.Threading.Tasks;
     using Plantarium.Infrastructure.Logging.Interfaces;
     using Plantarium.Infrastructure.Wrappers.Interfaces;
+    using Plantarium.Service.Common.Exceptions;
     using Plantarium.Service.Common.Models;
     using Plantarium.Service.User.Extensions;
     using Plantarium.Service.User.Models.Login;
@@ -69,10 +70,14 @@ namespace Plantarium.Service.User
                 await this.identityWrapper.AddToRoleAsync(request.Username, request.Role);
                 await this.userRepository.CreateUserAsync(request.ToUser(identityId));
             }
-            catch (Exception ex)
+            catch (Exception exception) when (IsClientError(exception))
             {
-                AddErrors(ex, response.Status);
-                this.logger.Error("{Error} encountered by {Username} on register", response.Status.Error.Title, request.Username);
+                AddErrors(exception, response.Status);
+                this.logger.Warning("{Error} encountered by {Username} on register", response.Status.Error.Title, request.Username);
+            }
+            catch (Exception exception)
+            {
+                throw new ServiceException<UserService>("Register failed", exception);
             }
 
             return response;
@@ -92,10 +97,14 @@ namespace Plantarium.Service.User
                 request.ValidateAndThrow(new LoginRequestValidator());
                 response.Data.Token = await this.identityWrapper.AuthenticateAsync(request.Username, request.Password);
             }
-            catch (Exception ex)
+            catch (Exception exception) when (IsClientError(exception))
             {
-                AddErrors(ex, response.Status);
-                this.logger.Error("{Error} encountered by {Username} on login", response.Status.Error.Title, request.Username);
+                AddErrors(exception, response.Status);
+                this.logger.Warning("{Error} encountered by {Username} on login", response.Status.Error.Title, request.Username);
+            }
+            catch (Exception exception)
+            {
+                throw new ServiceException<UserService>("Login failed", exception);
             }
 
             return response;
